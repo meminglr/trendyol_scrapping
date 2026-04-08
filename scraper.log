@@ -1,0 +1,77 @@
+22:08:50 [INFO] __main__: Aranıyor: 'laptop çantası' (1 sayfa)
+22:08:50 [INFO] scraper: Sayfa 1/1 çekiliyor...
+22:08:52 [ERROR] scraper: Bağlantı hatası (deneme 1/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:09:00 [ERROR] scraper: Bağlantı hatası (deneme 2/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:09:13 [ERROR] scraper: Bağlantı hatası (deneme 3/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:09:28 [ERROR] scraper: Tüm denemeler başarısız: https://public.trendyol.com/discovery-web-searchgw-service/v2/api/infinite-scroll
+22:09:28 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 0 | Çekilen: 0 | Sayfa: 1
+22:09:28 [WARNING] __main__: Kaydedilecek ürün yok.
+22:09:47 [INFO] __main__: Aranıyor: 'laptop çantası' (1 sayfa)
+22:09:47 [INFO] scraper: Sayfa 1/1 çekiliyor...
+22:09:50 [ERROR] scraper: Bağlantı hatası (deneme 1/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:09:57 [ERROR] scraper: Bağlantı hatası (deneme 2/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:10:10 [ERROR] scraper: Bağlantı hatası (deneme 3/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:10:25 [ERROR] scraper: Tüm denemeler başarısız: https://public.trendyol.com/discovery-web-searchgw-service/v2/api/infinite-scroll
+22:10:25 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 0 | Çekilen: 0 | Sayfa: 1
+22:10:25 [WARNING] __main__: Kaydedilecek ürün yok.
+22:10:52 [INFO] __main__: Aranıyor: 'laptop çantası' (1 sayfa)
+22:10:52 [INFO] scraper: Sayfa 1/1 çekiliyor...
+22:10:54 [ERROR] scraper: Bağlantı hatası (deneme 1/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:11:02 [ERROR] scraper: Bağlantı hatası (deneme 2/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:11:16 [ERROR] scraper: Bağlantı hatası (deneme 3/3): HTTPSConnectionPool(host='public.trendyol.com', port=443): Max retries exceeded with url: /discovery-web-searchgw-service/v2/api/infinite-scroll?pi=1&culture=tr-TR&userGenderId=1&pId=0&searchStrategyType=DEFAULT&productStampType=TypeA&scoringAlgorithmId=2&isLegalRequirement=False&q=laptop+%C3%A7antas%C4%B1&qt=laptop+%C3%A7antas%C4%B1&st=laptop+%C3%A7antas%C4%B1&os=1&sst=BEST_SELLER (Caused by NameResolutionError("HTTPSConnection(host='public.trendyol.com', port=443): Failed to resolve 'public.trendyol.com' ([Errno 8] nodename nor servname provided, or not known)"))
+22:15:27 [INFO] __main__: Aranıyor: 'laptop çantası' (1 sayfa)
+22:15:27 [INFO] scraper: Sayfa 1/1 çekiliyor...
+22:15:30 [WARNING] scraper: HTTP 400: https://apigw.trendyol.com/discovery-sfint-search-service/api/search/products
+22:15:32 [WARNING] scraper: HTTP 400: https://apigw.trendyol.com/discovery-sfint-search-service/api/search/products
+22:15:34 [WARNING] scraper: HTTP 400: https://apigw.trendyol.com/discovery-sfint-search-service/api/search/products
+22:15:34 [ERROR] scraper: Tüm denemeler başarısız: https://apigw.trendyol.com/discovery-sfint-search-service/api/search/products
+22:15:34 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 0 | Çekilen: 0 | Sayfa: 1
+22:15:34 [WARNING] __main__: Kaydedilecek ürün yok.
+22:19:36 [INFO] __main__: Aranıyor: 'laptop çantası' (1 sayfa)
+22:19:36 [INFO] scraper: Sayfa 1/1 çekiliyor...
+22:19:38 [WARNING] scraper: 400 Bad Request: https://apigw.trendyol.com/discovery-sfint-search-service/api/search/products — parametreler kontrol edilmeli.
+22:19:38 [ERROR] scraper: Tüm denemeler başarısız: https://apigw.trendyol.com/discovery-sfint-search-service/api/search/products
+22:19:38 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 0 | Çekilen: 0 | Sayfa: 1
+22:19:38 [WARNING] __main__: Kaydedilecek ürün yok.
+22:20:27 [INFO] __main__: Aranıyor: 'laptop çantası' (1 sayfa)
+22:20:27 [INFO] scraper: Sayfa 1/1 çekiliyor...
+22:20:29 [INFO] scraper: Sayfa 1: 24 ürün çekildi (toplam: 0)
+22:20:29 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 0 | Çekilen: 0 | Sayfa: 1
+22:20:29 [WARNING] __main__: Kaydedilecek ürün yok.
+22:21:47 [INFO] __main__: Aranıyor: 'laptop çantası' (1 sayfa)
+22:21:47 [INFO] scraper: Sayfa 1/1 çekiliyor...
+22:21:50 [INFO] scraper: Sayfa 1: 24 ürün çekildi (toplam: 24)
+22:21:50 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 0 | Çekilen: 24 | Sayfa: 1
+22:21:50 [INFO] exporter: JSON kaydedildi: output/search_laptop_çantası_20260408_222150.json
+22:24:06 [INFO] __main__: Aranıyor: 'laptop çantası' (3 sayfa)
+22:24:06 [INFO] scraper: Sayfa 1/3 çekiliyor...
+22:24:09 [INFO] scraper: Sayfa 1: 24 ürün çekildi (toplam: 24)
+22:24:09 [INFO] scraper: Sayfa 2/3 çekiliyor...
+22:24:11 [INFO] scraper: Sayfa 2: 24 ürün çekildi (toplam: 48)
+22:24:11 [INFO] scraper: Sayfa 3/3 çekiliyor...
+22:24:13 [INFO] scraper: Sayfa 3: 24 ürün çekildi (toplam: 72)
+22:24:13 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 65523 | Çekilen: 72 | Sayfa: 3
+22:24:13 [INFO] exporter: JSON kaydedildi: output/search_laptop_çantası_20260408_222413.json
+22:33:54 [INFO] __main__: Aranıyor: 'laptop çantası' → 1-3. sayfalar (birikimli)
+22:33:54 [INFO] scraper: Sayfa 1/3 çekiliyor...
+22:33:57 [INFO] scraper: Sayfa 1: 24 ürün çekildi (toplam: 24)
+22:33:57 [INFO] scraper: Sayfa 2/3 çekiliyor...
+22:34:00 [INFO] scraper: Sayfa 2: 24 ürün çekildi (toplam: 48)
+22:34:00 [INFO] scraper: Sayfa 3/3 çekiliyor...
+22:34:04 [INFO] scraper: Sayfa 3: 24 ürün çekildi (toplam: 72)
+22:34:04 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 65537 | Çekilen: 72 | Sayfa: 3
+22:34:04 [INFO] exporter: JSON kaydedildi: output/search_laptop_çantası_20260408_223404.json
+22:34:05 [INFO] __main__: Aranıyor: 'laptop çantası' → yalnızca 3. sayfa
+22:34:05 [INFO] scraper: Sayfa 3 çekiliyor (tek sayfa modu)...
+22:34:08 [INFO] scraper: Sayfa 3: 24 ürün çekildi
+22:34:08 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 65537 | Çekilen: 24 | Sayfa: 3
+22:34:08 [INFO] exporter: JSON kaydedildi: output/search_laptop_çantası_p3_20260408_223408.json
