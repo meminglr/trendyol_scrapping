@@ -1,0 +1,34 @@
+{
+  "product": {
+    "id": "878723264",
+    "name": "Lavabo Kötü Koku Giderici Önleyici Silikon Mat Sızdırmaz Lavabo Tıkacı Lavabo Tıpası Evye Kapağı GRİ",
+    "brand": "COZLEY",
+    "brand_id": 2378869,
+    "category": "Tuvalet Koku Giderici",
+    "category_id": 2458,
+    "price": 99.99,
+    "original_price": 99.99,
+    "discount_pct": 0.0,
+    "currency": "TRY",
+    "rating": 4.623300970873786,
+    "review_count": 515,
+    "in_stock": true,
+    "url": "",
+    "images": [
+      "https://cdn.dsmcdn.com/ty1605/prod/QC/20241124/04/653bafad-6058-32d6-bbb5-0f692bb2043a/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/web/production/product-placeholder-v2.jpeg",
+      "https://cdn.dsmcdn.com/ty1605/prod/QC/20241124/04/f0d55ee0-6561-38a7-a3bb-1b5407ef42d2/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1605/prod/QC/20241124/04/8af99d37-3cec-3a88-b6fb-7f98ad073184/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1605/prod/QC/20241124/04/eeff6af3-5bb8-3ee7-8861-0e97f6604b39/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1607/prod/QC/20241124/04/583527ca-9f34-3a7e-8849-4327bc8fc2b6/1_org_zoom.jpg"
+    ],
+    "description": "",
+    "seller": "COZLEY",
+    "seller_id": "1010350",
+    "badges": [],
+    "free_shipping": false,
+    "has_gift": false,
+    "cargo_days": null
+  },
+  "reviews": []
+}

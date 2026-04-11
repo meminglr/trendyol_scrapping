@@ -30,3 +30,5 @@ Toplam ürün: 0 | Çekilen: 0 | Sayfa: 3
 18:19:12 [INFO] __main__: Arama: laptop çantası
 Toplam ürün: 65218 | Çekilen: 24 | Sayfa: 3
 18:19:12 [INFO] exporter: CSV kaydedildi: output/laptoplar.csv (24 ürün)
+18:39:58 [INFO] __main__: Ürün çekiliyor: https://www.trendyol.com/cozley/lavabo-kotu-koku-giderici-onleyici-silikon-mat-sizdirmaz-lavabo-tikaci-lavabo-tipasi-evye-kapagi-gri-p-878723264
+18:40:00 [INFO] exporter: JSON kaydedildi: output/product_878723264.json
