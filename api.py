@@ -123,16 +123,7 @@ def _filters_from_search_body(body: SearchRequest) -> dict:
     ).to_params()
 
 
-def _filters_from_category_body(body: CategoryRequest) -> dict:
-    return SearchFilters(
-        min_price=body.min_price,
-        max_price=body.max_price,
-        sort_by=body.sort,
-    ).to_params()
-
-
-@app.post("/v1/search", dependencies=[Depends(require_api_key)])
-def v1_search(body: SearchRequest):
+def _search_response(body: SearchRequest) -> dict:
     single = body.page is not None
     page_num = body.page if single else body.pages
     filters = _filters_from_search_body(body)
@@ -150,6 +141,46 @@ def v1_search(body: SearchRequest):
         "count": len(result.products),
         "products": result.to_dicts(),
     }
+
+
+def _filters_from_category_body(body: CategoryRequest) -> dict:
+    return SearchFilters(
+        min_price=body.min_price,
+        max_price=body.max_price,
+        sort_by=body.sort,
+    ).to_params()
+
+
+@app.post("/v1/search", dependencies=[Depends(require_api_key)])
+def v1_search_post(body: SearchRequest):
+    return _search_response(body)
+
+
+@app.get("/v1/search", dependencies=[Depends(require_api_key)])
+def v1_search_get(
+    q: str = Query(
+        ...,
+        min_length=1,
+        description="Arama metni (boşluklar için %20 veya + kullanın)",
+    ),
+    pages: int = Query(3, ge=1, le=50),
+    page: Optional[int] = Query(None, ge=1, le=500),
+    min_price: Optional[float] = Query(None),
+    max_price: Optional[float] = Query(None),
+    free_shipping: bool = Query(False),
+    sort: SORT_CHOICES = Query("BEST_SELLER"),
+):
+    """Tarayıcı veya paylaşılabilir link ile arama (GET)."""
+    body = SearchRequest(
+        query=q,
+        pages=pages,
+        page=page,
+        min_price=min_price,
+        max_price=max_price,
+        free_shipping=free_shipping,
+        sort=sort,
+    )
+    return _search_response(body)
 
 
 @app.post("/v1/category", dependencies=[Depends(require_api_key)])
