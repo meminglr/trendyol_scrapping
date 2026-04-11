@@ -151,6 +151,26 @@ def _filters_from_category_body(body: CategoryRequest) -> dict:
     ).to_params()
 
 
+def _category_response(body: CategoryRequest) -> dict:
+    single = body.page is not None
+    page_num = body.page if single else body.pages
+    filters = _filters_from_category_body(body)
+    scraper = build_scraper()
+    result = scraper.search(
+        category_url=body.url,
+        max_pages=page_num,
+        filters=filters,
+        single_page=single,
+    )
+    return {
+        "category_url": result.category_url,
+        "total_count": result.total_count,
+        "pages_fetched": result.pages_fetched,
+        "count": len(result.products),
+        "products": result.to_dicts(),
+    }
+
+
 @app.post("/v1/search", dependencies=[Depends(require_api_key)])
 def v1_search_post(body: SearchRequest):
     return _search_response(body)
@@ -184,24 +204,33 @@ def v1_search_get(
 
 
 @app.post("/v1/category", dependencies=[Depends(require_api_key)])
-def v1_category(body: CategoryRequest):
-    single = body.page is not None
-    page_num = body.page if single else body.pages
-    filters = _filters_from_category_body(body)
-    scraper = build_scraper()
-    result = scraper.search(
-        category_url=body.url,
-        max_pages=page_num,
-        filters=filters,
-        single_page=single,
+def v1_category_post(body: CategoryRequest):
+    return _category_response(body)
+
+
+@app.get("/v1/category", dependencies=[Depends(require_api_key)])
+def v1_category_get(
+    url: str = Query(
+        ...,
+        min_length=10,
+        description="Trendyol kategori veya liste URL'si (tam adres; ? ve & için encode gerekir)",
+    ),
+    pages: int = Query(5, ge=1, le=50),
+    page: Optional[int] = Query(None, ge=1, le=500),
+    min_price: Optional[float] = Query(None),
+    max_price: Optional[float] = Query(None),
+    sort: SORT_CHOICES = Query("BEST_SELLER"),
+):
+    """Tarayıcı veya paylaşılabilir link ile kategori çekme (GET)."""
+    body = CategoryRequest(
+        url=url,
+        pages=pages,
+        page=page,
+        min_price=min_price,
+        max_price=max_price,
+        sort=sort,
     )
-    return {
-        "category_url": result.category_url,
-        "total_count": result.total_count,
-        "pages_fetched": result.pages_fetched,
-        "count": len(result.products),
-        "products": result.to_dicts(),
-    }
+    return _category_response(body)
 
 
 @app.post("/v1/product", dependencies=[Depends(require_api_key)])
