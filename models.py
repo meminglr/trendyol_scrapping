@@ -31,7 +31,6 @@ class Product:
     url: str
     images: list[str]
     description: str
-    attributes: dict
     seller: str
     seller_id: Optional[str]
     badges: list[str]
@@ -63,14 +62,6 @@ class Product:
                 if not url.startswith("http"):
                     url = f"https://cdn.dsmcdn.com{url}"
                 images.append(url)
-
-        # Özellikler
-        attrs = {}
-        for attr in result.get("attributes", []):
-            key = attr.get("key", {}).get("name", "")
-            val = attr.get("value", {}).get("name", "")
-            if key:
-                attrs[key] = val
 
         # Mağaza bilgisi
         merchant = result.get("merchant", {})
@@ -106,12 +97,94 @@ class Product:
             url=product_url,
             images=images,
             description=result.get("description", ""),
-            attributes=attrs,
             seller=seller,
             seller_id=seller_id,
             badges=badges,
             free_shipping=result.get("freeShipping", False),
             has_gift=result.get("hasGift", False),
+            cargo_days=cargo_days,
+        )
+
+    @classmethod
+    def from_html(cls, data: dict) -> "Product":
+        """
+        Trendyol HTML sayfasındaki gömülü JSON'dan Product oluşturur.
+        Kaynak: window["__envoy_product-info__PROPS"]
+        Trendyol API erişimi başarısız olduğunda fallback olarak kullanılır.
+        """
+        product = data.get("product", {})
+
+        # Fiyat — merchantListing > winnerVariant > price
+        merchant_listing = product.get("merchantListing", {})
+        winner_variant = merchant_listing.get("winnerVariant", {})
+        price_obj = winner_variant.get("price", {})
+
+        discounted = price_obj.get("discountedPrice", {})
+        original   = price_obj.get("originalPrice", {})
+        price_val  = float(discounted.get("value", 0.0) or 0.0)
+        orig_val   = float(original.get("value", price_val) or price_val)
+        disc = round((1 - price_val / orig_val) * 100, 1) if orig_val > 0 and orig_val > price_val else 0.0
+        currency = discounted.get("currency", "TRY")
+
+        # Görseller
+        images = []
+        for img in product.get("images", []):
+            url = img if isinstance(img, str) else img.get("url", "")
+            if url:
+                if not url.startswith("http"):
+                    url = f"https://cdn.dsmcdn.com{url}"
+                images.append(url)
+
+        # Mağaza bilgisi
+        merchant  = merchant_listing.get("merchant", {})
+        seller    = merchant.get("name", "")
+        seller_id = str(merchant.get("id", "")) if merchant.get("id") else None
+
+        # Rating
+        rating_obj   = product.get("ratingScore", {})
+        rating       = float(rating_obj.get("averageRating", 0.0) or 0.0) if isinstance(rating_obj, dict) else 0.0
+        review_count = int(rating_obj.get("totalCount", 0) or 0) if isinstance(rating_obj, dict) else 0
+
+        # Stok
+        in_stock = bool(product.get("inStock", True))
+
+        # URL
+        product_url = product.get("url", "")
+        if product_url and not product_url.startswith("http"):
+            product_url = f"https://www.trendyol.com{product_url}"
+
+        # Badge'ler
+        badges = [
+            b.get("text", "") for b in product.get("badges", [])
+            if isinstance(b, dict) and b.get("text")
+        ]
+
+        # Kargo
+        shipping   = product.get("shippingDetails", {})
+        cargo_days = shipping.get("deliveryDuration") if isinstance(shipping, dict) else None
+
+        return cls(
+            id=str(product.get("id", product.get("contentId", ""))),
+            name=product.get("name", ""),
+            brand=product.get("brand", {}).get("name", "") if isinstance(product.get("brand"), dict) else str(product.get("brand", "")),
+            brand_id=product.get("brand", {}).get("id") if isinstance(product.get("brand"), dict) else None,
+            category=product.get("category", {}).get("name", "") if isinstance(product.get("category"), dict) else "",
+            category_id=product.get("category", {}).get("id") if isinstance(product.get("category"), dict) else None,
+            price=price_val,
+            original_price=orig_val,
+            discount_pct=disc,
+            currency=currency,
+            rating=rating,
+            review_count=review_count,
+            in_stock=in_stock,
+            url=product_url,
+            images=images,
+            description=product.get("description", ""),
+            seller=seller,
+            seller_id=seller_id,
+            badges=badges,
+            free_shipping=product.get("freeShipping", winner_variant.get("freeCargo", False)),
+            has_gift=product.get("hasGift", False),
             cargo_days=cargo_days,
         )
 
@@ -182,7 +255,6 @@ class Product:
             url=product_url,
             images=images,
             description="",
-            attributes={},
             seller=data.get("merchantName", ""),
             seller_id=str(data.get("merchantId", "")) if data.get("merchantId") else None,
             badges=[b.get("text", "") for b in (data.get("badges") or []) if isinstance(b, dict)],

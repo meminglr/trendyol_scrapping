@@ -7,8 +7,6 @@ Kullanım:
     python main.py search "laptop çantası" --pages 3 --csv output/laptoplar.csv
     python main.py product https://www.trendyol.com/.../p-123456789
     python main.py category "https://www.trendyol.com/kadin-elbise" --excel
-    python main.py track --add "URL" --target-price 299.90
-    python main.py track --run --interval 60
 """
 
 import argparse
@@ -19,8 +17,7 @@ from pathlib import Path
 
 from scraper import TrendyolScraper
 from config import ScraperConfig, SearchFilters
-from exporter import save_csv, save_json, save_excel, TrendyolDB
-from price_tracker import PriceTracker
+from exporter import save_csv, save_json, save_excel
 
 # ------------------------------------------------------------------ #
 #  Loglama kurulumu                                                    #
@@ -174,53 +171,6 @@ def cmd_product(args, scraper: TrendyolScraper):
     return product, reviews
 
 
-# ------------------------------------------------------------------ #
-#  Komut: track (fiyat takibi)                                         #
-# ------------------------------------------------------------------ #
-
-def cmd_track(args, scraper: TrendyolScraper, db: TrendyolDB):
-    tracker = PriceTracker(scraper, db)
-
-    if args.add:
-        # Yeni alert ekle
-        if not args.target_price:
-            print("Hata: --target-price gerekli.")
-            sys.exit(1)
-        p = tracker.add_alert_from_url(
-            args.add,
-            target_price=args.target_price,
-            target_discount_pct=args.target_discount or 0.0,
-        )
-        if p:
-            print(f"✓ Alert eklendi: {p.name} → {args.target_price:.2f} TRY")
-
-    elif args.remove:
-        tracker.remove_alert(args.remove)
-        print(f"✓ Alert silindi: {args.remove}")
-
-    elif args.list:
-        if not tracker.alerts:
-            print("Takip edilen ürün yok.")
-        for a in tracker.alerts:
-            print(f"  [{a.product_id}] {a.product_name} → hedef: {a.target_price:.2f} TRY")
-
-    elif args.check:
-        triggered = tracker.check_all()
-        print(f"{len(triggered)} alert tetiklendi.")
-
-    elif args.run:
-        interval = args.interval or 60
-        tracker.run(interval_minutes=interval)
-
-    elif args.history:
-        rows = db.get_price_history(args.history)
-        if not rows:
-            print("Fiyat geçmişi bulunamadı.")
-        else:
-            print(f"\nFiyat Geçmişi ({args.history}):")
-            for r in rows:
-                stock = "✓" if r["in_stock"] else "✗"
-                print(f"  {r['recorded_at'][:16]}  |  {r['price']:.2f} TRY  |  -%{r['discount_pct']:.1f}  |  Stok: {stock}")
 
 
 # ------------------------------------------------------------------ #
@@ -316,17 +266,6 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--reviews", type=int, metavar="PAGES", help="Yorum sayfası sayısı")
     p.add_argument("--excel", action="store_true")
 
-    # --- track ---
-    t = sub.add_parser("track", help="Fiyat takibi")
-    t.add_argument("--add", metavar="URL", help="Takip listesine URL ekle")
-    t.add_argument("--remove", metavar="PRODUCT_ID", help="Alert sil")
-    t.add_argument("--list", action="store_true", help="Alertleri listele")
-    t.add_argument("--check", action="store_true", help="Tek seferlik kontrol")
-    t.add_argument("--run", action="store_true", help="Sürekli takip başlat")
-    t.add_argument("--interval", type=int, default=60, help="Kontrol aralığı (dakika)")
-    t.add_argument("--target-price", type=float, help="Hedef fiyat (TRY)")
-    t.add_argument("--target-discount", type=float, help="Hedef indirim orani (yuzde)")
-    t.add_argument("--history", metavar="PRODUCT_ID", help="Fiyat geçmişini göster")
 
     return parser
 
@@ -345,14 +284,13 @@ def main():
         parser.print_help()
         sys.exit(0)
 
-    # Scraper & DB kurulumu
+    # Scraper kurulumu
     config = ScraperConfig(
         min_delay=args.delay[0],
         max_delay=args.delay[1],
         proxy=getattr(args, "proxy", None),
     )
     scraper = TrendyolScraper(config=config)
-    db = TrendyolDB()
 
     try:
         if args.command == "search":
@@ -361,8 +299,6 @@ def main():
             cmd_category(args, scraper)
         elif args.command == "product":
             cmd_product(args, scraper)
-        elif args.command == "track":
-            cmd_track(args, scraper, db)
         else:
             parser.print_help()
     except KeyboardInterrupt:

@@ -33,7 +33,6 @@ class TrendyolScraper:
     - Ürün detayı çekme (tek ürün)
     - Kategori/arama sayfası çekme (çoklu ürün)
     - Yorum (değerlendirme) çekme
-    - Fiyat geçmişi verisi
     """
 
     BASE_URL = "https://www.trendyol.com"
@@ -117,6 +116,9 @@ class TrendyolScraper:
                     logger.warning(f"400 Bad Request: {url} — parametreler kontrol edilmeli.")
                     logger.debug(f"Yanıt: {resp.text[:300]}")
                     break  # 400 retry etme
+                elif resp.status_code == 556:
+                    logger.warning(f"556 Bot bloğu: {url} — API erişimi engellendi, retry yapılmıyor.")
+                    break  # 556 retry etme
                 else:
                     logger.warning(f"HTTP {resp.status_code}: {url}")
 
@@ -183,12 +185,69 @@ class TrendyolScraper:
             return None
 
     def get_product_from_url(self, url: str) -> Optional[Product]:
-        """URL'den ürün ID'sini çıkarıp ürün verisi çeker."""
+        """
+        URL'den ürün verisi çeker.
+        Strateji: Önce HTML fallback (hızlı, direkt), başarısız olursa API dene.
+        Not: Trendyol ürün detay API'si (apigw) sıklıkla 556 ile bloke
+        ettiğinden HTML yöntemi birincil kaynak olarak kullanılır.
+        """
         product_id = self.extract_product_id(url)
         if not product_id:
             logger.error(f"URL'den ürün ID çıkarılamadı: {url}")
             return None
-        return self.get_product(product_id)
+
+        # 1) HTML yöntemi — hızlı ve güvenilir
+        product = self._get_product_from_html(url)
+        if product:
+            return product
+
+        # 2) API yöntemi — fallback
+        logger.warning(f"HTML parse başarısız (ID={product_id}), API deneniyor...")
+        product = self.get_product(product_id)
+        if product is None:
+            logger.error(f"API de başarısız oldu: {url}")
+        return product
+
+    def _get_product_from_html(self, url: str) -> Optional[Product]:
+        """
+        HTML sayfasını parse ederek ürün verisi çeker.
+        window["__envoy_product-info__PROPS"] gömülü JSON'u kullanır.
+        Trendyol API erişimi başarısız olduğunda fallback olarak çalışır.
+        """
+        html_headers = {
+            "User-Agent": random.choice(self.config.user_agents),
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
+
+        try:
+            self._sleep()
+            resp = self.session.get(url, headers=html_headers, timeout=self.config.timeout)
+            if resp.status_code != 200:
+                logger.warning(
+                    f"HTML fallback: Sayfa yüklenemedi ({resp.status_code}): {url}"
+                )
+                return None
+
+            text = resp.text
+            prefix = 'window["__envoy_product-info__PROPS"]='
+            start_pos = text.find(prefix)
+
+            if start_pos == -1:
+                logger.warning("HTML fallback: Ürün verisi HTML içinde bulunamadı.")
+                return None
+
+            start_json = start_pos + len(prefix)
+            decoder = json.JSONDecoder()
+            data, _ = decoder.raw_decode(text[start_json:])
+
+            return Product.from_html(data)
+
+        except Exception as e:
+            logger.error(f"HTML fallback hatası: {e}")
+            return None
 
     # ------------------------------------------------------------------ #
     #  Kategori / Arama Sayfaları                                          #
@@ -318,7 +377,7 @@ class TrendyolScraper:
         if category_url:
             path = self.extract_category_path(category_url)
             if path:
-                params["categoryPath"] = path
+                params["pathModel"] = path
             # URL'deki query string parametrelerini aktar
             parsed = urlparse(category_url)
             qs = parse_qs(parsed.query)
@@ -378,30 +437,3 @@ class TrendyolScraper:
             logger.info(f"Yorum sayfası {page+1}: {len(reviews_raw)} yorum")
 
         return all_reviews
-
-    # ------------------------------------------------------------------ #
-    #  Fiyat takibi yardımcısı                                            #
-    # ------------------------------------------------------------------ #
-
-    def track_prices(self, product_ids: list[str]) -> dict:
-        """
-        Birden fazla ürünün güncel fiyatlarını çeker.
-        Fiyat takip sistemi için kullanılır.
-
-        Returns:
-            {product_id: {"price": ..., "original_price": ..., "discount": ...}}
-        """
-        result = {}
-        for pid in product_ids:
-            product = self.get_product(pid)
-            if product:
-                result[pid] = {
-                    "name": product.name,
-                    "price": product.price,
-                    "original_price": product.original_price,
-                    "discount_pct": product.discount_pct,
-                    "in_stock": product.in_stock,
-                    "timestamp": time.time(),
-                }
-            time.sleep(random.uniform(1, 2))
-        return result
