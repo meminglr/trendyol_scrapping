@@ -12,3 +12,21 @@ Toplam ürün: 100000 | Çekilen: 24 | Sayfa: 1
 17:59:29 [INFO] __main__: Arama: https://www.trendyol.com/sr?q=kulaklik
 Toplam ürün: 100000 | Çekilen: 24 | Sayfa: 1
 17:59:29 [INFO] exporter: JSON kaydedildi: output/category_20260411_175929.json
+18:06:49 [INFO] __main__: Aranıyor: 'laptop çantası' → 1-3. sayfalar (birikimli)
+18:06:49 [INFO] scraper: Sayfa 1/3 çekiliyor...
+18:07:12 [ERROR] scraper: Hata (deneme 1/3): Failed to perform, curl: (28) Connection timed out after 20002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:08:12 [INFO] __main__: Aranıyor: 'laptop çantası' → yalnızca 3. sayfa
+18:08:12 [INFO] scraper: Sayfa 3 çekiliyor (tek sayfa modu)...
+18:08:35 [ERROR] scraper: Hata (deneme 1/3): Failed to perform, curl: (28) Connection timed out after 20001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:09:03 [ERROR] scraper: Hata (deneme 2/3): Failed to perform, curl: (28) Connection timed out after 20002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:09:37 [ERROR] scraper: Hata (deneme 3/3): Failed to perform, curl: (28) Connection timed out after 20001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:09:52 [ERROR] scraper: Tüm denemeler başarısız: https://apigw.trendyol.com/discovery-sfint-search-service/api/search/products
+18:09:52 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 0 | Çekilen: 0 | Sayfa: 3
+18:09:52 [WARNING] __main__: Kaydedilecek ürün yok.
+18:19:07 [INFO] __main__: Aranıyor: 'laptop çantası' → yalnızca 3. sayfa
+18:19:07 [INFO] scraper: Sayfa 3 çekiliyor (tek sayfa modu)...
+18:19:12 [INFO] scraper: Sayfa 3: 24 ürün çekildi
+18:19:12 [INFO] __main__: Arama: laptop çantası
+Toplam ürün: 65218 | Çekilen: 24 | Sayfa: 3
+18:19:12 [INFO] exporter: CSV kaydedildi: output/laptoplar.csv (24 ürün)

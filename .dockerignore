@@ -1,0 +1,12 @@
+.venv
+__pycache__
+*.py[cod]
+.git
+.gitignore
+output
+*.log
+scraper.log
+trendyol
+*.csv
+*.xlsx
+*.db
